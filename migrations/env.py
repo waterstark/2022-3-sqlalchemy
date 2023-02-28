@@ -15,8 +15,8 @@ from app.web.config import DatabaseConfig
 # access to the values within the .ini file in use.
 config = context.config
 
-with open("config.yml") as config:
-    conf = yaml.safe_load(config)
+with open("config.yml") as conf:
+    conf = yaml.safe_load(conf)
 
 section = config.config_ini_section
 config.set_section_option(section, "DB_HOST", conf["database"]["host"])
