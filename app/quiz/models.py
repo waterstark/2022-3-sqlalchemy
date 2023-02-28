@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
@@ -7,13 +8,13 @@ from app.store.database.sqlalchemy_base import db
 
 @dataclass
 class Theme:
-    id: int | None
+    id: Optional[int]
     title: str
 
 
 @dataclass
 class Question:
-    id: int | None
+    id: Optional[int]
     title: str
     theme_id: int
     answers: list["Answer"]
