@@ -1,5 +1,6 @@
 import asyncio
 from logging.config import fileConfig
+import os
 
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
@@ -21,7 +22,10 @@ config.set_section_option(section, "DB_USER", DatabaseConfig.user)
 config.set_section_option(section, "DB_NAME", DatabaseConfig.database)
 config.set_section_option(section, "DB_PASS", DatabaseConfig.password)
 
-
+config.set_main_option(
+    "sqlalchemy.url",
+    f"postgresql://postgres:postgres@{DatabaseConfig.host}/{DatabaseConfig.database}",
+)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
