@@ -18,7 +18,8 @@ class Database:
 
     async def connect(self, *_: list, **__: dict) -> None:
         self._db = db
-        self._engine = create_async_engine(DATABASE_URL, echo=True, future=True)
+        url = f"postgresql+asyncpg://{self.app.config.database.user}:{self.app.config.database.password}@{self.app.config.database.host}:{self.app.config.database.port}/{self.app.config.database.database}"
+        self._engine = create_async_engine(url, echo=True, future=True)
         self.session = sessionmaker(
             self._engine, class_=AsyncSession, expire_on_commit=False
         )
