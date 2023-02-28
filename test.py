@@ -1,12 +1,7 @@
-import yaml
 import os
-from app.store.database.sqlalchemy_base import db
-from app.web.config import Config, DatabaseConfig
+import yaml
 
-with open(
-    os.path(/Users/waterstark/code/hw-backend-summer-2022-3-sqlalchemy./config.yml)
-) as fh:
-    cfg = yaml.safe_load(fh)
-    app_config = Config(database=DatabaseConfig(**cfg["database"]))
+with open("config.yml") as config:
+    conf = yaml.safe_load(config)
 
-print(app_config)
+print(conf["database"]["password"])

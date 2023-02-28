@@ -1,6 +1,6 @@
 import asyncio
 from logging.config import fileConfig
-import os
+import yaml
 
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
@@ -15,17 +15,16 @@ from app.web.config import DatabaseConfig
 # access to the values within the .ini file in use.
 config = context.config
 
-section = config.config_ini_section
-config.set_section_option(section, "DB_HOST", DatabaseConfig.host)
-config.set_section_option(section, "DB_PORT", str(DatabaseConfig.port))
-config.set_section_option(section, "DB_USER", DatabaseConfig.user)
-config.set_section_option(section, "DB_NAME", DatabaseConfig.database)
-config.set_section_option(section, "DB_PASS", DatabaseConfig.password)
+with open("config.yml") as config:
+    conf = yaml.safe_load(config)
 
-config.set_main_option(
-    "sqlalchemy.url",
-    f"postgresql://postgres:postgres@{DatabaseConfig.host}/{DatabaseConfig.database}",
-)
+section = config.config_ini_section
+config.set_section_option(section, "DB_HOST", conf["database"]["host"])
+config.set_section_option(section, "DB_PORT", str(conf["database"]["port"]))
+config.set_section_option(section, "DB_USER", conf["database"]["user"])
+config.set_section_option(section, "DB_NAME", conf["database"]["database"])
+config.set_section_option(section, "DB_PASS", conf["database"]["password"])
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
